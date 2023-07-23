@@ -23,6 +23,7 @@ fetchBreeds().then(cats => {
         option.text = cats[i].name;
         refs.select.append(option);
     }
+    
 // console.log(cats[i].name)
 
 }).catch(err => console.log(err));
