@@ -5,18 +5,12 @@ axios.defaults.headers.common["x-api-key"] = "live_SrdRs6FoQE4ieaTlJFUjw3DEORVGo
 
 const refs = {
     select: document.querySelector('.breed-select'),
-    catInfo: document.querySelector('.cat-info')
+    catInfo: document.querySelector('.cat-info'),
+    
 };
 
-
-
-
-// const BASE_URL = 'https://api.thecatapi.com/v1/';
-
-
-
 fetchBreeds().then(cats => {
-    // console.log(cats);
+    
     for (let i = 0; i < cats.length; i += 1) {
         const option = document.createElement('option');
         option.value = cats[i].id;
@@ -24,13 +18,8 @@ fetchBreeds().then(cats => {
         refs.select.append(option);
         
     }
-   
-// console.log(cats[i].name)
 
 }).catch(err => console.log(err));
-
-
-
 
 refs.select.addEventListener('change', onChange);
 
@@ -49,19 +38,7 @@ function onChange() {
                 return cat;  
             })
             .then(data => (refs.catInfo.innerHTML = createMarkup(img, data)))
-        // (refs.catInfo.innerHTML = createMarkup(img, cat))
-        // fetchBreeds().then(cats => {
-        //     const cat = cats.find(cat => cat.id === id);
-        //     // console.log(cat);
-        //     // console.log(cat.name);
-        //     // console.log(cat.description);
-        //     // console.log(cat.temperament);
-        //     // console.log(refs.catInfo);
-        //     // console.log(createMarkup(cat));
-        //     // const { name, description, temperament } = cat;
-        //     return cat;
-        //     // }).then((data) => (refs.catInfo.innerHTML = createMarkup(data)))
-        // }).then((data) => (refs.catInfo.innerHTML = createMarkup(data))) 
+         
     }).catch(err => console.log(err));
     
 };
@@ -69,12 +46,21 @@ function onChange() {
 function createMarkup(img, data) {
     
     const { name, description, temperament } = data;
-    const markup = (img, ({ name, description, temperament }) => 
-        `<img src="${img}" alt="${name}">
-        <h2>${name}</h2>
-         <p>${description}</p>
-         <p>Temperament:${temperament}</p>`);
+    const markup =  
+        `<img class="cat-img" src="${img}" alt="${name}" width="250">
+        <div class="cat-container">
+            <h2 class="cat-name" >${name}</h2>
+            <p class="cat-description" >${description}</p>
+            <p class="cat-temperament">
+                <span class="cat-temperament-title" > Temperament: </span>
+                ${temperament}</p>
+        </div>`;
+    
+    refs.catInfo.style.display = "flex";
+    refs.catInfo.style.gap = "20px";
     
     return markup;
 }; 
+
+
     
